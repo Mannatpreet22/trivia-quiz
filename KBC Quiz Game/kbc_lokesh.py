@@ -24,19 +24,7 @@ def select(event):
     mixer.music.set_volume(1)
     b = event.widget
     value = b["text"]
-
-    callButton.config(image="")
-    progressbarA.place_forget()
-    progressbarLabelA.place_forget()
-
-    progressbarB.place_forget()
-    progressbarLabelB.place_forget()
-
-    progressbarC.place_forget()
-    progressbarLabelC.place_forget()
-
-    progressbarD.place_forget()
-    progressbarLabelD.place_forget()
+    resetButtons()
     if currentQuestion.check_answer(value):
         if questionNo == 14:
 
@@ -118,92 +106,119 @@ def select(event):
         questionNo += 1
         amountlabel.config(image=images[questionNo])
     else:
+        lose()
 
-        def tryagain():
-            mixer.music.load(folderLocation + "kbc.mp3")
-            mixer.music.play(-1)
-            resetQuestions()
-            root1.destroy()
 
-        def on_closing():
-            root1.destroy()
-            root.destroy()
+def lose():
+    def tryagain():
+        mixer.music.load(folderLocation + "kbc.mp3")
+        mixer.music.play(-1)
+        resetQuestions()
+        root1.destroy()
 
-        mixer.music.stop()
-        root1 = Toplevel()
-        root1.overrideredirect(True)
-        root1.grab_set()
-        root1.config(bg="black")
-        root1.geometry("500x400+140+30")
-        root1.title("You won 0 Pound")
-        img = PhotoImage(file=folderLocation + "center.png")
-        imgLabel = Label(root1, image=img, bd=0)
-        imgLabel.pack(pady=30)
-        loselabel = Label(
-            root1,
-            text="You Lose",
-            font=("arial", 40, "bold"),
-            bg="black",
-            fg="white",
-        )
-        loselabel.pack()
-        sadimage = PhotoImage(file=folderLocation + "sad.png")
-        sadlabel = Label(root1, image=sadimage, bg="black")
-        sadlabel.place(x=400, y=280)
-        sadlabel1 = Label(root1, image=sadimage, bg="black")
-        sadlabel1.place(x=30, y=280)
+    def on_closing():
+        root1.destroy()
+        root.destroy()
 
-        tryagainButton = Button(
-            root1,
-            text="Try Again",
-            font=("arial", 20, "bold"),
-            bg="black",
-            fg="white",
-            bd=0,
-            activebackground="black",
-            cursor="hand2",
-            activeforeground="white",
-            command=tryagain,
-        )
-        tryagainButton.pack()
+    mixer.music.stop()
+    root1 = Toplevel()
+    root1.overrideredirect(True)
+    root1.grab_set()
+    root1.config(bg="black")
+    root1.geometry("500x400+140+30")
+    root1.title("You won 0 Pound")
+    img = PhotoImage(file=folderLocation + "center.png")
+    imgLabel = Label(root1, image=img, bd=0)
+    imgLabel.pack(pady=30)
+    loselabel = Label(
+        root1,
+        text="You Lose",
+        font=("arial", 40, "bold"),
+        bg="black",
+        fg="white",
+    )
+    loselabel.pack()
+    sadimage = PhotoImage(file=folderLocation + "sad.png")
+    sadlabel = Label(root1, image=sadimage, bg="black")
+    sadlabel.place(x=400, y=280)
+    sadlabel1 = Label(root1, image=sadimage, bg="black")
+    sadlabel1.place(x=30, y=280)
 
-        closeButton = Button(
-            root1,
-            text="Close",
-            font=("arial", 20, "bold"),
-            bg="black",
-            fg="white",
-            bd=0,
-            activebackground="black",
-            cursor="hand2",
-            activeforeground="white",
-            command=on_closing,
-        )
-        closeButton.pack()
+    tryagainButton = Button(
+        root1,
+        text="Try Again",
+        font=("arial", 20, "bold"),
+        bg="black",
+        fg="white",
+        bd=0,
+        activebackground="black",
+        cursor="hand2",
+        activeforeground="white",
+        command=tryagain,
+    )
+    tryagainButton.pack()
 
-        root1.protocol("WM_DELETE_WINDOW", on_closing)
+    closeButton = Button(
+        root1,
+        text="Close",
+        font=("arial", 20, "bold"),
+        bg="black",
+        fg="white",
+        bd=0,
+        activebackground="black",
+        cursor="hand2",
+        activeforeground="white",
+        command=on_closing,
+    )
+    closeButton.pack()
 
-        root1.mainloop()
+    root1.protocol("WM_DELETE_WINDOW", on_closing)
+    root1.mainloop()
 
 
 def resetQuestions():
     global questionsDone, questionNo
     questionsDone = []
     questionNo = 0
-    phoneLifelineButton.config(state=NORMAL, image=phoneImage)
+    flipLifelineButton.config(state=NORMAL, image=flipImage)
     lifeline50Button.config(state=NORMAL, image=image50)
     audiencePoleButton.config(state=NORMAL, image=audiencePole)
+    # phoneLifelineButton.config(state=NORMAL, image=phoneImage)
     amountlabel.config(image=images[questionNo])
     changeQuestion()
 
 
+def resetButtons():
+    # callButton.config(image="")
+
+    progressbarA.place_forget()
+    progressbarLabelA.place_forget()
+
+    progressbarB.place_forget()
+    progressbarLabelB.place_forget()
+
+    progressbarC.place_forget()
+    progressbarLabelC.place_forget()
+
+    progressbarD.place_forget()
+    progressbarLabelD.place_forget()
+
+
 def changeQuestion():
     q = -1
+    t = 0
     while q == -1 or q in questionsDone:
         q = random.randint(0, len(questions) - 1)
+        t += 1
+        if t > 1000:
+            print("Out of Questions!")
+            resetButtons()
+            lose()
+            return
 
     global currentQuestion
     currentQuestion = questions[q]
+    questionsDone.append(q)
     questionData = currentQuestion.get_data()
     questionArea.delete(1.0, END)
     questionArea.insert(END, questionData["question"])
@@ -300,14 +315,20 @@ def audiencePoleLifeline():
         progressbarD.config(value=r)
 
 
-def phoneLifeline():
-    mixer.music.stop()
-    mixer.music.load(folderLocation + "calling.mp3")
-    mixer.music.play()
-
+def flipLifeline():
     if not cheatMode:
-        phoneLifelineButton.config(image=phoneImageX, state=DISABLED)
-    callButton.config(image=callimage)
+        flipLifelineButton.config(image=flipImageX, state=DISABLED)
+    changeQuestion()
+
+
+# def phoneLifeline():
+#     mixer.music.stop()
+#     mixer.music.load(folderLocation + "calling.mp3")
+#     mixer.music.play()
+
+#     if not cheatMode:
+#         phoneLifelineButton.config(image=phoneImageX, state=DISABLED)
+#     callButton.config(image=callimage)
 
 
 def phoneclick():
@@ -377,26 +398,42 @@ audiencePoleButton = Button(
 )
 audiencePoleButton.grid(row=0, column=1)
 
-phoneImage = PhotoImage(file=folderLocation + "phoneAFriend.png")
-phoneImageX = PhotoImage(file=folderLocation + "phoneAFriendX.png")
-phoneLifelineButton = Button(
+flipImage = PhotoImage(file=folderLocation + "phoneAFriend.png")
+flipImageX = PhotoImage(file=folderLocation + "phoneAFriendX.png")
+flipLifelineButton = Button(
     topFrame,
-    image=phoneImage,
+    image=flipImage,
     bd=0,
     bg="black",
     cursor="hand2",
     activebackground="black",
     width=180,
     height=80,
-    command=phoneLifeline,
+    command=flipLifeline,
 )
-phoneLifelineButton.grid(row=0, column=2)
+flipLifelineButton.grid(row=0, column=2)
 
-callimage = PhotoImage(file=folderLocation + "phone.png")
-callButton = Button(
-    root, bg="black", bd=0, activebackground="black", cursor="hand2", command=phoneclick
-)
-callButton.place(x=70, y=260)
+
+# phoneImage = PhotoImage(file=folderLocation + "phoneAFriend.png")
+# phoneImageX = PhotoImage(file=folderLocation + "phoneAFriendX.png")
+# phoneLifelineButton = Button(
+#     topFrame,
+#     image=phoneImage,
+#     bd=0,
+#     bg="black",
+#     cursor="hand2",
+#     activebackground="black",
+#     width=180,
+#     height=80,
+#     command=phoneLifeline,
+# )
+# phoneLifelineButton.grid(row=0, column=2)
+
+# callimage = PhotoImage(file=folderLocation + "phone.png")
+# callButton = Button(
+#     root, bg="black", bd=0, activebackground="black", cursor="hand2", command=phoneclick
+# )
+# callButton.place(x=70, y=260)
 
 images = [
     PhotoImage(file=folderLocation + "Picture0.png"),
