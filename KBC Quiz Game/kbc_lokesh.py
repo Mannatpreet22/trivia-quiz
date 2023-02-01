@@ -7,7 +7,7 @@ import classes
 from kbc_data import questions
 
 folderLocation = "KBC Quiz Game/"
-cheatMode = True
+cheatMode = False
 
 mixer.init()
 mixer.music.load(folderLocation + "kbc.mp3")
