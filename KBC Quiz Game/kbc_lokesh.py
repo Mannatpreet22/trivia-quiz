@@ -182,14 +182,14 @@ def resetQuestions():
     questionNo = 0
     flipLifelineButton.config(state=NORMAL, image=flipImage)
     lifeline50Button.config(state=NORMAL, image=image50)
-    audiencePoleButton.config(state=NORMAL, image=audiencePole)
-    # phoneLifelineButton.config(state=NORMAL, image=phoneImage)
+    # audiencePoleButton.config(state=NORMAL, image=audiencePole)
+    phoneLifelineButton.config(state=NORMAL, image=phoneImage)
     amountlabel.config(image=images[questionNo])
     changeQuestion()
 
 
 def resetButtons():
-    # callButton.config(image="")
+    callButton.config(image="")
 
     progressbarA.place_forget()
     progressbarLabelA.place_forget()
@@ -260,59 +260,59 @@ def lifeline50():
         optionButton4.config(text="")
 
 
-def audiencePoleLifeline():
-    if not cheatMode:
-        audiencePoleButton.config(image=audiencePolex)
-        audiencePoleButton.config(state=DISABLED)
+# def audiencePoleLifeline():
+#     if not cheatMode:
+#         audiencePoleButton.config(image=audiencePolex)
+#         audiencePoleButton.config(state=DISABLED)
 
-    progressbarA.place(x=580, y=190)
-    progressbarLabelA.place(x=580, y=320)
+#     progressbarA.place(x=580, y=190)
+#     progressbarLabelA.place(x=580, y=320)
 
-    progressbarB.place(x=620, y=190)
-    progressbarLabelB.place(x=620, y=320)
+#     progressbarB.place(x=620, y=190)
+#     progressbarLabelB.place(x=620, y=320)
 
-    progressbarC.place(x=660, y=190)
-    progressbarLabelC.place(x=660, y=320)
+#     progressbarC.place(x=660, y=190)
+#     progressbarLabelC.place(x=660, y=320)
 
-    progressbarD.place(x=700, y=190)
-    progressbarLabelD.place(x=700, y=320)
+#     progressbarD.place(x=700, y=190)
+#     progressbarLabelD.place(x=700, y=320)
 
-    questionData = currentQuestion.get_data()
-    q = -1
-    if questionData["correct_option"] == questionData["options"][0]:
-        q = 1
-    elif questionData["correct_option"] == questionData["options"][1]:
-        q = 2
-    elif questionData["correct_option"] == questionData["options"][2]:
-        q = 3
-    elif questionData["correct_option"] == questionData["options"][3]:
-        q = 4
-    else:
-        print("Life-Line 50-50 did not find the Question.")
+#     questionData = currentQuestion.get_data()
+#     q = -1
+#     if questionData["correct_option"] == questionData["options"][0]:
+#         q = 1
+#     elif questionData["correct_option"] == questionData["options"][1]:
+#         q = 2
+#     elif questionData["correct_option"] == questionData["options"][2]:
+#         q = 3
+#     elif questionData["correct_option"] == questionData["options"][3]:
+#         q = 4
+#     else:
+#         print("Life-Line 50-50 did not find the Question.")
 
-    r = random.randint(80, 95)
+#     r = random.randint(80, 95)
 
-    r1 = random.randint(20, 70)
-    r2 = random.randint(20, 70)
-    r3 = random.randint(20, 70)
-    r4 = random.randint(20, 70)
+#     r1 = random.randint(20, 70)
+#     r2 = random.randint(20, 70)
+#     r3 = random.randint(20, 70)
+#     r4 = random.randint(20, 70)
 
-    if q != 1:
-        progressbarA.config(value=r1)
-    else:
-        progressbarA.config(value=r)
-    if q != 2:
-        progressbarB.config(value=r2)
-    else:
-        progressbarB.config(value=r)
-    if q != 3:
-        progressbarC.config(value=r3)
-    else:
-        progressbarC.config(value=r)
-    if q != 4:
-        progressbarD.config(value=r4)
-    else:
-        progressbarD.config(value=r)
+#     if q != 1:
+#         progressbarA.config(value=r1)
+#     else:
+#         progressbarA.config(value=r)
+#     if q != 2:
+#         progressbarB.config(value=r2)
+#     else:
+#         progressbarB.config(value=r)
+#     if q != 3:
+#         progressbarC.config(value=r3)
+#     else:
+#         progressbarC.config(value=r)
+#     if q != 4:
+#         progressbarD.config(value=r4)
+#     else:
+#         progressbarD.config(value=r)
 
 
 def flipLifeline():
@@ -321,14 +321,14 @@ def flipLifeline():
     changeQuestion()
 
 
-# def phoneLifeline():
-#     mixer.music.stop()
-#     mixer.music.load(folderLocation + "calling.mp3")
-#     mixer.music.play()
+def phoneLifeline():
+    mixer.music.stop()
+    mixer.music.load(folderLocation + "calling.mp3")
+    mixer.music.play()
 
-#     if not cheatMode:
-#         phoneLifelineButton.config(image=phoneImageX, state=DISABLED)
-#     callButton.config(image=callimage)
+    if not cheatMode:
+        phoneLifelineButton.config(image=phoneImageX, state=DISABLED)
+    callButton.config(image=callimage)
 
 
 def phoneclick():
@@ -383,20 +383,20 @@ lifeline50Button = Button(
 )
 lifeline50Button.grid(row=0, column=0)
 
-audiencePole = PhotoImage(file=folderLocation + "audiencePole.png")
-audiencePolex = PhotoImage(file=folderLocation + "audiencePoleX.png")
-audiencePoleButton = Button(
-    topFrame,
-    image=audiencePole,
-    bd=0,
-    bg="black",
-    cursor="hand2",
-    activebackground="black",
-    width=180,
-    height=80,
-    command=audiencePoleLifeline,
-)
-audiencePoleButton.grid(row=0, column=1)
+# audiencePole = PhotoImage(file=folderLocation + "audiencePole.png")
+# audiencePolex = PhotoImage(file=folderLocation + "audiencePoleX.png")
+# audiencePoleButton = Button(
+#     topFrame,
+#     image=audiencePole,
+#     bd=0,
+#     bg="black",
+#     cursor="hand2",
+#     activebackground="black",
+#     width=180,
+#     height=80,
+#     command=audiencePoleLifeline,
+# )
+# audiencePoleButton.grid(row=0, column=1)
 
 flipImage = PhotoImage(file=folderLocation + "phoneAFriend.png")
 flipImageX = PhotoImage(file=folderLocation + "phoneAFriendX.png")
@@ -411,29 +411,29 @@ flipLifelineButton = Button(
     height=80,
     command=flipLifeline,
 )
-flipLifelineButton.grid(row=0, column=2)
+flipLifelineButton.grid(row=0, column=1)
 
 
-# phoneImage = PhotoImage(file=folderLocation + "phoneAFriend.png")
-# phoneImageX = PhotoImage(file=folderLocation + "phoneAFriendX.png")
-# phoneLifelineButton = Button(
-#     topFrame,
-#     image=phoneImage,
-#     bd=0,
-#     bg="black",
-#     cursor="hand2",
-#     activebackground="black",
-#     width=180,
-#     height=80,
-#     command=phoneLifeline,
-# )
-# phoneLifelineButton.grid(row=0, column=2)
+phoneImage = PhotoImage(file=folderLocation + "phoneAFriend.png")
+phoneImageX = PhotoImage(file=folderLocation + "phoneAFriendX.png")
+phoneLifelineButton = Button(
+    topFrame,
+    image=phoneImage,
+    bd=0,
+    bg="black",
+    cursor="hand2",
+    activebackground="black",
+    width=180,
+    height=80,
+    command=phoneLifeline,
+)
+phoneLifelineButton.grid(row=0, column=2)
 
-# callimage = PhotoImage(file=folderLocation + "phone.png")
-# callButton = Button(
-#     root, bg="black", bd=0, activebackground="black", cursor="hand2", command=phoneclick
-# )
-# callButton.place(x=70, y=260)
+callimage = PhotoImage(file=folderLocation + "phone.png")
+callButton = Button(
+    root, bg="black", bd=0, activebackground="black", cursor="hand2", command=phoneclick
+)
+callButton.place(x=70, y=260)
 
 images = [
     PhotoImage(file=folderLocation + "Picture0.png"),
