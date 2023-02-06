@@ -3,7 +3,6 @@ from tkinter.ttk import Progressbar
 import pyttsx3
 from pygame import mixer
 import random
-import classes
 from kbc_data import questions
 
 folderLocation = "KBC Quiz Game/"
@@ -398,8 +397,8 @@ lifeline50Button.grid(row=0, column=0)
 # )
 # audiencePoleButton.grid(row=0, column=1)
 
-flipImage = PhotoImage(file=folderLocation + "phoneAFriend.png")
-flipImageX = PhotoImage(file=folderLocation + "phoneAFriendX.png")
+flipImage = PhotoImage(file=folderLocation + "flip the question.png")
+flipImageX = PhotoImage(file=folderLocation + "flip the question x.png")
 flipLifelineButton = Button(
     topFrame,
     image=flipImage,
