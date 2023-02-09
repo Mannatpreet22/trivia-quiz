@@ -6,7 +6,7 @@ import random
 from kbc_data import questions
 
 folderLocation = "KBC Quiz Game/"
-cheatMode = False
+cheatMode = True
 
 mixer.init()
 mixer.music.load(folderLocation + "kbc.mp3")
